@@ -16,7 +16,7 @@ class CreatePackagenamesTable extends Migration
         Schema::create('packagenames', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('description');
             $table->dateTime('created_at');
         });
     }
