@@ -9,4 +9,9 @@ class Product extends Model
 {
     use HasFactory;
     public $timestamps = false;
+
+    public function packageproduct()
+    {
+        return $this->hasMany('App\Models\Package');
+    }
 }

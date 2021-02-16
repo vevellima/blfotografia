@@ -15,13 +15,11 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->float('price');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('packagename_id');
+            $table->unsignedBigInteger('product_id');
             $table->foreign('packagename_id')->references('id')->on('packagenames');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->double('price');
             $table->dateTime('created_at');
         });
     }

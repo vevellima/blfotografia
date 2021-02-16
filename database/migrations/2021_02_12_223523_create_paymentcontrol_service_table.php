@@ -16,9 +16,6 @@ class CreatePaymentcontrolServiceTable extends Migration
         Schema::create('paymentcontrol_service', function (Blueprint $table) {
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('paymentcontrol_id');
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
-            $table->foreign('paymentcontrol_id')->references('id')->on('paymentcontrols');
-            $table->primary(['service_id', 'paymentcontrol_id']);
         });
     }
 

@@ -29,4 +29,5 @@ Route::prefix('painel')->group(function () {
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     Route::resource('packagenames', App\Http\Controllers\Admin\PackagenameController::class);
     Route::resource('products', App\Http\Controllers\Admin\ProductController::class);
+    Route::resource('packages', App\Http\Controllers\Admin\PackageController::class);
 });

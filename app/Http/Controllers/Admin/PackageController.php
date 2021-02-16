@@ -1,12 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Package;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Models\Package;
+use App\Models\Packagename;
+use App\Models\Product;
 
 class PackageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,15 @@ class PackageController extends Controller
      */
     public function index()
     {
-        //
+        $packages = Package::paginate(5);
+        $packagenames = Packagename::all();
+        $products = Product::all();
+
+        return view('admin.packages.index', [
+            'packages' => $packages,
+            'packagenames' => $packagenames,
+            'products' => $products
+        ]);
     }
 
     /**
@@ -24,7 +40,13 @@ class PackageController extends Controller
      */
     public function create()
     {
-        //
+        $packagenames = Packagename::all();
+        $products = Product::all();
+
+        return view('admin.packages.create', [
+            'packagenames' => $packagenames,
+            'products' => $products,
+        ]);
     }
 
     /**
@@ -35,7 +57,30 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only([
+            'price',
+            'packagename_id',
+            'product_id'
+        ]);
+
+        $validator = Validator::make($data, [
+            'price' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('packages.create')
+            ->withErrors($validator)
+                ->withInput();
+        }
+
+        $package = new Package;
+        $package->price = intval($data['price']);
+        $package->packagename_id = $data['packagename_id'];
+        $package->product_id = $data['product_id'];
+        $package->created_at = date('Y-m-d H:i:s', strtotime(now()));
+        $package->save();
+
+        return redirect()->route('packages.index');
     }
 
     /**
