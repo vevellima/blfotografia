@@ -27,8 +27,8 @@
                 @foreach ($services as $service)
                 <tr>
                     <td>{{$service->id}}</td>
-                    <td>{{$service->servuser->first('name')}}</td>
-                    <td>{{$service->package->packagename->name}}</td>
+                    <td>{{$service->user_id}}</td>
+                    <td>{{$service->package_id}}</td>Service
                     <td>{{date('d/m/Y', strtotime($service->created_at))}}</td>
                     <td>
                         <a href="{{route('services.edit', ['service'=>$service->id])}}" class="btn btn-sm btn-primary">Editar</a>

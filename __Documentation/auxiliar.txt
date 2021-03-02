@@ -1,0 +1,24 @@
+			<span class="select2 select2-container select2-container--bootstrap4 select2-container--above" dir="ltr" style="width: 100%;">
+                            <span class="selection form-control">
+                                <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+                                    <ul class="select2-selection__rendered">
+                                        @foreach ($products as $product)
+                                            <li class="select2-selection__choice" title="{{$product['name']}}">
+                                                <span class="select2-selection__choice__remove" role="presentation">
+                                                    <font style="vertical-align: inherit;">
+                                                        <font style="vertical-align: inherit;">x</font>
+                                                    </font>
+                                                </span>
+                                                <font style="vertical-align: inherit;">
+                                                    <font style="vertical-align: inherit;">{{$product['name']}}</font>
+                                                </font>
+                                            </li>
+                                            <li class="select2-search select2-search--inline">
+                                                <input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder style="width: 0.75em">
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </span>
+                            </span>
+                            <span class="dropdown-wrapper" aria-hidden="true"></span>
+                        </span>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\User;
@@ -44,7 +45,17 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        //
+        $packagenames = Packagename::all();
+        $products = Product::all();
+        $packages = Package::all();
+        $users = User::all();
+
+        return view('admin.services.create', [
+            'packagenames' => $packagenames,
+            'products' => $products,
+            'packages' => $packages,
+            'users' => $users
+        ]);
     }
 
     /**
@@ -55,7 +66,53 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only([
+            'user_id',
+            'package_id',
+            'payform',
+            'day',
+            'hours',
+            'local',
+            'address',
+            'neighborhood',
+            'city',
+            'state'
+        ]);
+
+        $validator = Validator::make($data, [
+            'user_id' => ['required', 'string'],
+            'package_id' => ['required', 'string'],
+            'payform' => ['required', 'string'],
+            'day' => ['required', 'string'],
+            'hours' => ['required', 'string'],
+            'local' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'neighborhood' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'state' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('services.create')
+            ->withErrors($validator)
+                ->withInput();
+        }
+
+        $services = new Service;
+        $services->user_id = intval($data['user_id']);
+        $services->package_id = intval($data['package_id']);
+        $services->payform = intval($data['payform']);
+        $services->day = $data['day'];
+        $services->hours = $data['hours'];
+        $services->local = $data['local'];
+        $services->address = $data['address'];
+        $services->neighborhood = $data['neighborhood'];
+        $services->city = $data['city'];
+        $services->state = $data['state'];
+        $services->created_at = date('Y-m-d H:i:s', strtotime(now()));
+        $services->save();
+
+        return redirect()->route('services.index');
     }
 
     /**
