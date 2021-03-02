@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar - Produto')
+@section('title', 'Cadastrar - Pacote')
 
 @section('js')
     <script type="text/javascript">
@@ -21,7 +21,7 @@
 
 @section('content_header')
     <h1>
-        Cadastrar Produto
+        Cadastrar Pacote
     </h1>
 @endsection
 

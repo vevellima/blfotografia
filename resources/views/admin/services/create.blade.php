@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar - Pacote')
+@section('title', 'Serviço Fotográfico')
 
 @section('js')
     <script type="text/javascript">
@@ -21,7 +21,7 @@
 
 @section('content_header')
     <h1>
-        Editar Pacote
+        Cadastrar Produto
     </h1>
 @endsection
 
@@ -40,46 +40,45 @@
         </div>
     @endif
 
-    <form action="{{route('packages.update', ['package' => $package->id])}}" method="POST" class="form-horizontal">
+    <form action="{{route('packages.store')}}" method="POST" class="form-horizontal">
         @csrf
-        @method('PUT')
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="form-group col-12">
-                        <label class="col-sm col-form-label">Selecione o Novo Nome de Pacote</label>
+                        <label class="col-sm col-form-label">Selecione o Nome do Packote</label>
                         <select class="col-sm form-control" id="package" size="-1" onChange="updateNamePackage()">
-                            <option value="-1">{{$package->packagename->name}}</option>
+                            <option value="-1">Selecione uma opção...</option>
                             @foreach ($packagenames as $packagename)
                                 <option value="{{$packagename->id}}">{{$packagename->name}} - {{$packagename->description}}</option>
                             @endforeach
                         </select>
-                        <input type="hidden" name="packagename_id" value="{{$package->packagename_id}}" id="valueNamePackage">
+                        <input type="hidden" name="packagename_id" id="valueNamePackage">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
-                        <label class="col-sm col-form-label">Selecione o Novo Produto</label>
+                        <label class="col-sm col-form-label">Selecione o Produto</label>
                         <select class="col-sm form-control" id="product" size="-1" onChange="updateProduct()">
-                            <option value="-1">{{$package->product->name}}</option>
+                            <option value="-1">Selecione uma opção...</option>
                             @foreach ($products as $product)
                                 <option value="{{$product->id}}">{{$product->name}}</option>
                             @endforeach
                         </select>
-                        <input type="hidden" name="product_id" value="{{$package->product_id}}" id="valueProduct">
+                        <input type="hidden" name="product_id" id="valueProduct">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
                         <label class="col-sm col-form-label">Preço</label>
-                        <input type="text" name="price" class="form-control" value="{{$package->price}},00" @error('price') is-invalid @enderror">
+                        <input type="text" name="price" class="form-control @error('price') is-invalid @enderror">
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-6">
-                <input type="submit" value="Salvar" class="btn btn-success">
+                <input type="submit" value="Cadastrar" class="btn btn-success">
             </div>
         </div>
     </form>

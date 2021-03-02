@@ -1,9 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Service;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Service;
+use App\Models\User;
+use App\Models\Paymentcontrol;
+use App\Models\Package;
+use App\Models\Packagename;
+use App\Models\Product;
 
 class ServiceController extends Controller
 {
@@ -14,7 +20,21 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        $services = Service::paginate(5);
+        $users = User::all();
+        $paymentcontrols = Paymentcontrol::all();
+        $packages = Package::all();
+        $packagenames = Packagename::all();
+        $products = Product::all();
+
+        return view('admin.services.index', [
+            'services' => $services,
+            'users' => $users,
+            'paymentcontrols' => $paymentcontrols,
+            'packages' => $packages,
+            'packagenames' => $packagenames,
+            'products' => $products
+        ]);
     }
 
     /**

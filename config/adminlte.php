@@ -236,7 +236,7 @@ return [
         ],
         [
             'text' => 'Contratação',
-            'url'  => 'painel/contracts',
+            'url'  => 'painel/services',
             'icon' => 'fas fa-handshake',
             'can' => 'admin-user',
         ],

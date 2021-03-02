@@ -9,4 +9,9 @@ class Paymentcontrol extends Model
 {
     use HasFactory;
     public $timestamps = false;
+
+    public function paycontrolserv()
+    {
+        return $this->belongsTo('App\Models\Service');
+    }
 }

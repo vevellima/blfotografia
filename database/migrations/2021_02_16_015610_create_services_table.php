@@ -16,8 +16,9 @@ class CreateServicesTable extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('paymentcontrol_id');
             $table->unsignedBigInteger('package_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('package_id')->references('id')->on('packages');
             $table->integer('payform');
             $table->string('day');
             $table->string('hours');

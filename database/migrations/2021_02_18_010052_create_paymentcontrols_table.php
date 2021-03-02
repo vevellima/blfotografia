@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentcontrolServiceTable extends Migration
+class CreatePaymentcontrolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreatePaymentcontrolServiceTable extends Migration
      */
     public function up()
     {
-        Schema::create('paymentcontrol_service', function (Blueprint $table) {
+        Schema::create('paymentcontrols', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('service_id');
-            $table->unsignedBigInteger('paymentcontrol_id');
+            $table->foreign('service_id')->references('id')->on('services');
+            $table->integer('portion');
+            $table->dateTime('date');
+            $table->dateTime('created_at');
         });
     }
 
@@ -26,6 +30,6 @@ class CreatePaymentcontrolServiceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('package_service');
+        Schema::dropIfExists('paymentcontrols');
     }
 }

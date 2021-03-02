@@ -102,7 +102,19 @@ class PackageController extends Controller
      */
     public function edit(Package $package)
     {
-        //
+        if ($package) {
+
+            $packagenames = Packagename::all();
+            $products = Product::all();
+
+            return view('admin.packages.edit', [
+                'package' => $package,
+                'packagenames' => $packagenames,
+                'products' => $products
+            ]);
+        }
+
+        return redirect()->route('packages.index');
     }
 
     /**
@@ -114,7 +126,41 @@ class PackageController extends Controller
      */
     public function update(Request $request, Package $package)
     {
-        //
+        if ($package) {
+            $data = $request->only([
+                'price',
+                'packagename_id',
+                'product_id'
+            ]);
+
+            $validator = Validator::make([
+                'price' => $data['price'],
+            ], [
+                'price' => ['required', 'string'],
+            ]);
+
+            if (count($validator->errors()) > 0) {
+                return redirect()->route('products.edit', [
+                    'package' => $package
+                ])->withErrors($validator);
+            }
+
+            if ($package->price != $data['price']) {
+                $package->price = intval($data['price']);
+            }
+
+            if ($package->packagename_id != $data['packagename_id']) {
+                $package->packagename_id = intval($data['packagename_id']);
+            }
+
+            if ($package->product_id != $data['product_id']) {
+                $package->product_id = intval($data['product_id']);
+            }
+
+            $package->save();
+        }
+
+        return redirect()->route('packages.index');
     }
 
     /**
@@ -125,6 +171,8 @@ class PackageController extends Controller
      */
     public function destroy(Package $package)
     {
-        //
+        $package->delete();
+
+        return redirect()->route('packages.index');
     }
 }
