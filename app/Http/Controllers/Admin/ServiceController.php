@@ -22,19 +22,9 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Service::paginate(5);
-        $users = User::all();
-        $paymentcontrols = Paymentcontrol::all();
-        $packages = Package::all();
-        $packagenames = Packagename::all();
-        $products = Product::all();
 
         return view('admin.services.index', [
-            'services' => $services,
-            'users' => $users,
-            'paymentcontrols' => $paymentcontrols,
-            'packages' => $packages,
-            'packagenames' => $packagenames,
-            'products' => $products
+            'services' => $services
         ]);
     }
 
