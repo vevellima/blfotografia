@@ -17,20 +17,20 @@ class CreateAllTables extends Migration
             $table->id();
             $table->string('name');
             $table->tinyInteger('access_level')->default('0');
-            $table->string('cpf');
-            $table->string('cnpj');
-            $table->string('rg');
-            $table->date('birthdate');
-            $table->string('phone');
-            $table->string('address');
-            $table->string('neighborhood');
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip_code');
+            $table->string('cpf')->nullable();
+            $table->string('cnpj')->nullable();
+            $table->string('rg')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('neighborhood')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip_code')->nullable();
             $table->string('email');
-            $table->string('website');
+            $table->string('website')->nullable();
             $table->string('password');
-            $table->string('remember_token');
+            $table->string('remember_token')->nullable();
         });
 
         Schema::create('packagenames', function (Blueprint $table) {

@@ -2,7 +2,52 @@ $array = ['error' => ''];
 
 return $array;
 
---- Tables ---
+--- TABLES ---
+- users
+- photos	
+- services
+- paymentcontrols
+- packages
+- products
+- packagenames
+
+--- MODELS ---
+User
+Photo
+Service
+Paymentcontrol
+Package
+Product
+Packagename
+
+--- CONTROLLERS ---
+User
+Photo
+Service
+PaymentControl
+Package
+Product
+PackageName
+
+--- ANDPOINTS ---
 
 
---- And Points ---
+--- TOKEN ---
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6NTUwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYxNjI5Njc4NCwibmJmIjoxNjE2Mjk2Nzg0LCJqdGkiOiJyNFhQTHRLbzR2alZBa1lSIiwic3ViIjoxLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.KRS506o66oCmT2zPiToGNE9iHiiB16PU-0BzfiKZ1io
+
+--- CAMPOS TABLES - USERS ---
+$name = $request->input('name');
+$email = $request->input('email');
+$password = $request->input('password');
+$access_level = '';
+$cpf = '';
+$cnpj = '';
+$rg = '';
+$birthdate = '';
+$phone = '';
+$address = '';
+$neighborhood = '';
+$city = '';
+$state = '';
+$zip_code = '';
+$website = '';*/
