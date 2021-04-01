@@ -14,7 +14,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
-        $this->loggedUser = auth()->user();
+        $this->loggedUser = Auth::user();
     }
 
     public function create(Request $request)
@@ -31,18 +31,6 @@ class UserController extends Controller
             $name = $request->input('name');
             $email = $request->input('email');
             $password = $request->input('password');
-            $access_level = $request->input('access_level');
-            $cpf = $request->input('cpf');
-            $cnpj = $request->input('cnpj');
-            $rg = $request->input('rg');
-            $birthdate = $request->input('birthdate');
-            $phone = $request->input('phone');
-            $address = $request->input('address');
-            $neighborhood = $request->input('neighborhood');
-            $city = $request->input('city');
-            $state = $request->input('state');
-            $zip_code = $request->input('zip_code');
-            $website = $request->input('website');
 
             $emailExists = User::where('email', $email)->count();
 
@@ -52,18 +40,6 @@ class UserController extends Controller
                 $newUser->name = $name;
                 $newUser->email = $email;
                 $newUser->password = $hash;
-                $newUser->access_level = $access_level;
-                $newUser->cpf = $cpf;
-                $newUser->cnpj = $cnpj;
-                $newUser->rg = $rg;
-                $newUser->birthdate = $birthdate;
-                $newUser->phone = $phone;
-                $newUser->address = $address;
-                $newUser->neighborhood = $neighborhood;
-                $newUser->city = $city;
-                $newUser->state = $state;
-                $newUser->zip_code = $zip_code;
-                $newUser->website = $website;
                 $newUser->save();
             } else {
                 $array['error'] = 'E-mail já cadastrado!';

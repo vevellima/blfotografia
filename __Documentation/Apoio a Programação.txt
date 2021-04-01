@@ -33,7 +33,7 @@ PackageName
 
 
 --- TOKEN ---
-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6NTUwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYxNjI5Njc4NCwibmJmIjoxNjE2Mjk2Nzg0LCJqdGkiOiJyNFhQTHRLbzR2alZBa1lSIiwic3ViIjoxLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.KRS506o66oCmT2zPiToGNE9iHiiB16PU-0BzfiKZ1io
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6NTUwMFwvYXBpXC9hdXRoXC91c2VyIiwiaWF0IjoxNjE3MjI0ODkxLCJuYmYiOjE2MTcyMjQ4OTEsImp0aSI6InQ4N1ZkWG16YnpTYXllZXUiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.ic7FxK6IGmcxM8YKkArkf1W6sNI7d4Juz6kudY7TEoc
 
 --- CAMPOS TABLES - USERS ---
 $name = $request->input('name');
@@ -51,3 +51,11 @@ $city = '';
 $state = '';
 $zip_code = '';
 $website = '';*/
+
+
+private function _packageListToObject($packageList, $idPackage)
+    {
+        foreach ($variable as $key => $value) {
+            # code...
+        }
+    }

@@ -64,16 +64,6 @@ class AuthController extends Controller
         return $array;
     }
 
-    public function read()
-    {
-        $array = ['error' => ''];
-
-        $info = $this->loggedUser;
-        $array['data'] = $info;
-
-        return $array;
-    }
-
     public function login(Request $request)
     {
         $array = ['error' => ''];

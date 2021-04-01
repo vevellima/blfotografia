@@ -12,4 +12,5 @@ class PackageName extends Model
     protected $table = 'packagenames';
 
     public $timestamps = false;
+
 }

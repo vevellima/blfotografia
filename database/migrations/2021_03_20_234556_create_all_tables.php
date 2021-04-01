@@ -50,6 +50,8 @@ class CreateAllTables extends Migration
             $table->id();
             $table->unsignedBigInteger('packagename_id');
             $table->unsignedBigInteger('product_id');
+            $table->foreign('packagename_id')->references('id')->on('packagenames');
+            $table->foreign('product_id')->references('id')->on('products');
             $table->float('price');
             $table->dateTime('created_at');
         });
@@ -58,6 +60,8 @@ class CreateAllTables extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('package_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('package_id')->references('id')->on('packages');
             $table->integer('payform');
             $table->string('day');
             $table->string('hours');
@@ -69,10 +73,19 @@ class CreateAllTables extends Migration
             $table->dateTime('created_at');
         });
 
+        Schema::create('paymentforms', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('id')->on('services');
+            $table->integer('portion');
+            $table->dateTime('date_pay');
+            $table->dateTime('created_at');
+        });
+
         Schema::create('paymentcontrols', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('service_id');
+            $table->unsignedBigInteger('paymentform_id');
+            $table->foreign('paymentform_id')->references('id')->on('paymentforms');
             $table->integer('portion');
             $table->dateTime('date_pay');
             $table->float('value_pay');
@@ -83,6 +96,8 @@ class CreateAllTables extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('service_id');
+            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('service_id')->references('id')->on('services');
             $table->string('name');
             $table->dateTime('created_at');
         });
@@ -100,6 +115,7 @@ class CreateAllTables extends Migration
         Schema::dropIfExists('packagenames');
         Schema::dropIfExists('packages');
         Schema::dropIfExists('services');
+        Schema::dropIfExists('paymentforms');
         Schema::dropIfExists('paymentcontrols');
         Schema::dropIfExists('photos');
     }
