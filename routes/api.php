@@ -53,7 +53,6 @@ Route::get('/paymentcontrol', [PaymentControlController::class, 'read']);
 Route::get('/paymentcontrols', [PaymentControlController::class, 'list']);
 Route::put('/paymentcontrol', [PaymentControlController::class, 'update']);
 
-Route::post('/photo', [PhotoController::class, 'create']);
-Route::get('/photo', [PhotoController::class, 'read']);
+Route::post('/photo', [PhotoController::class, 'upload']);
 Route::get('/photos', [PhotoController::class, 'list']);
-Route::put('/photo', [PhotoController::class, 'update']);
+
