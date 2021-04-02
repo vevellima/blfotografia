@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Service;
 use App\Models\Package;
 use App\Models\PackageName;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\PaymentForm;
+
 
 class ServiceController extends Controller
 {

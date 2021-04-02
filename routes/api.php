@@ -54,5 +54,5 @@ Route::get('/paymentcontrols', [PaymentControlController::class, 'list']);
 Route::put('/paymentcontrol', [PaymentControlController::class, 'update']);
 
 Route::post('/photo', [PhotoController::class, 'upload']);
-Route::get('/photos', [PhotoController::class, 'list']);
+
 
