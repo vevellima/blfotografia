@@ -16,5 +16,5 @@ Route::prefix('painel')->group(function () {
     Route::get('register', [App\Http\Controllers\Admin\Auth\RegisterController::class, 'index'])->name('register');
     Route::post('register', [App\Http\Controllers\Admin\Auth\RegisterController::class, 'register']);
 
-
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
 });

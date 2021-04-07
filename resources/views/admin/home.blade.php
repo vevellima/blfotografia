@@ -3,7 +3,7 @@
 @section('title', 'Painel')
 
 @section('content_header')
-    <h1>Painel de Controle</h1>
+    <h1>Página Inicial</h1>
 @endsection
 
 @section('content')

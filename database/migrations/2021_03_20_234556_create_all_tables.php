@@ -92,6 +92,22 @@ class CreateAllTables extends Migration
             $table->dateTime('created_at');
         });
 
+        Schema::create('receipts', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('paymentcontrol_id');
+            $table->foreign('paymentcontrol_id')->references('id')->on('paymentcontrols');
+            $table->string('archive');
+            $table->dateTime('created_at');
+        });
+
+        Schema::create('contracts', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('id')->on('services');
+            $table->string('archive');
+            $table->dateTime('created_at');
+        });
+
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
@@ -117,6 +133,8 @@ class CreateAllTables extends Migration
         Schema::dropIfExists('services');
         Schema::dropIfExists('paymentforms');
         Schema::dropIfExists('paymentcontrols');
+        Schema::dropIfExists('receipts');
+        Schema::dropIfExists('contracts');
         Schema::dropIfExists('photos');
     }
 }

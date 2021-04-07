@@ -225,86 +225,61 @@ return [
 
     'menu' => [
         [
-            'text' => 'search',
-            'search' => true,
-            'topnav' => true,
+            'text' => 'Página Inicial',
+            'url'  => 'painel',
+            'icon' => 'fas fa-home',
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text' => 'Dashboard',
+            'url'  => 'painel/dashboard',
+            'icon' => 'fas fa-chart-pie',
+            'can' => 'user-admin',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'text' => 'Agendamento',
+            'url'  => 'painel/services',
+            'icon' => 'far fa-calendar-alt',
+            'can' => 'user-admin',
         ],
-        ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
+            'text' => 'Pagamento',
+            'url'  => 'painel/paymentcontrols',
+            'icon' => 'fas fa-cash-register',
+            'can' => 'user-admin',
+        ],
+        [
+            'text' => 'Fotografias',
+            'url'  => 'painel/photos',
+            'icon' => 'fas fa-camera-retro',
+        ],
+
+        [
+            'header' => 'Cadastro',
+            'can' => 'user-admin',
+        ],
+        [
+            'text' => 'Usuários',
+            'url'  => 'painel/users',
             'icon' => 'fas fa-fw fa-user',
+            'can' => 'user-admin',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Produto',
+            'url'  => 'painel/products',
+            'icon' => 'fas fa-dolly',
+            'can' => 'user-admin',
         ],
         [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
+            'text' => 'Nome do Pacote',
+            'url'  => 'painel/packagenames',
+            'icon' => 'fas fa-cube',
+            'can' => 'user-admin',
         ],
         [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
+            'text' => 'Pacotes',
+            'url'  => 'painel/packages',
+            'icon' => 'fas fa-cubes',
+            'can' => 'user-admin',
         ],
     ],
 

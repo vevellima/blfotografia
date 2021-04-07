@@ -2,6 +2,9 @@ $array = ['error' => ''];
 
 return $array;
 
+--- Font Awesome ---
+<script src="https://kit.fontawesome.com/d5a1e54610.js" crossorigin="anonymous"></script>
+
 --- TABLES ---
 - users
 - photos	
@@ -33,7 +36,7 @@ PackageName
 
 
 --- TOKEN ---
-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6NTUwMFwvYXBpXC9hdXRoXC91c2VyIiwiaWF0IjoxNjE3MjI0ODkxLCJuYmYiOjE2MTcyMjQ4OTEsImp0aSI6InQ4N1ZkWG16YnpTYXllZXUiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.ic7FxK6IGmcxM8YKkArkf1W6sNI7d4Juz6kudY7TEoc
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6NTUwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYxNzMyNzU0NywibmJmIjoxNjE3MzI3NTQ3LCJqdGkiOiJ0dE1LREZCQk94SzFjZlJaIiwic3ViIjoxLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.yEUJi4JUGzS0LWiku-DzuLFykg2kW5LexV8Ht76hxXs
 
 --- CAMPOS TABLES - USERS ---
 $name = $request->input('name');
