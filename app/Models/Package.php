@@ -11,4 +11,19 @@ class Package extends Model
 
     public $timestamps = false;
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function packagename()
+    {
+        return $this->belongsTo(PackageName::class);
+    }
+
+    public function servpackage()
+    {
+        return $this->hasMany(Service::class);
+    }
+
 }

@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Nome de Pacotes')
+@section('title', 'Pacotes')
 
 @section('content_header')
     <h1>
-        Cadastro de Nome de Pacotes
-        <a href="{{route('packagenames.create')}}" class="btn btn-sm btn-success">Adicionar</a>
+        Cadastro de Pacotes
+        <a href="{{route('packages.create')}}" class="btn btn-sm btn-success">Adicionar</a>
     </h1>
 
 @endsection
@@ -19,20 +19,20 @@
                         <th>ID</th>
                         <th>Pacote</th>
                         <th>Descrição</th>
-                        <th>Data de Criação</th>
+                        <th>Preço</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($packagenames as $packagename)
+                    @foreach ($packages as $package)
                         <tr>
-                            <td>{{$packagename->id}}</td>
-                            <td>{{$packagename->packagename}}</td>
-                            <td>{{$packagename->description}}</td>
-                            <td>{{date('d/m/Y', strtotime(date($packagename->created_at)))}}</td>
+                            <td>{{$package->id}}</td>
+                            <td>{{$package->product->product}}</td>
+                            <td>{{$package->packagename->packagename}} - {{$package->packagename->description}}</td>
+                            <td>{{$package->price}},00</td>
                             <td>
-                                <a href="{{route('packagenames.edit', ['packagename' => $packagename->id])}}" class="btn btn-sm btn-info">Editar</a>
-                                <form class="d-inline" action="{{route('packagenames.destroy', ['packagename' => $packagename->id])}}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?')">
+                                <a href="{{route('packages.edit', ['package' => $package->id])}}" class="btn btn-sm btn-info">Editar</a>
+                                <form class="d-inline" action="{{route('packages.destroy', ['package' => $package->id])}}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?')">
                                     @method('DELETE')
                                     @csrf
                                     <button class="btn btn-sm btn-danger">Excluir</button>
@@ -44,5 +44,5 @@
             </table>
         </div>
     </div>
-    {{$packagenames->links()}}
+    {{$packages->links()}}
 @endsection

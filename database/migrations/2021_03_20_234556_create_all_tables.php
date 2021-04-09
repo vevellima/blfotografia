@@ -35,14 +35,14 @@ class CreateAllTables extends Migration
 
         Schema::create('packagenames', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('packagename');
             $table->string('description');
             $table->dateTime('created_at');
         });
 
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('product');
             $table->dateTime('created_at');
         });
 
@@ -78,7 +78,7 @@ class CreateAllTables extends Migration
             $table->unsignedBigInteger('service_id');
             $table->foreign('service_id')->references('id')->on('services');
             $table->integer('portion');
-            $table->dateTime('date_pay');
+            $table->dateTime('due_date');
             $table->dateTime('created_at');
         });
 

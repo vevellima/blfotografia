@@ -13,4 +13,9 @@ class PackageName extends Model
 
     public $timestamps = false;
 
+    public function pkname()
+    {
+        return $this->hasMany(Package::class);
+    }
+
 }

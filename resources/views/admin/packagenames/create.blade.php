@@ -29,8 +29,8 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="name">Nome do Pacote</label>
-                            <input type="text" name="name" id="name" value="{{old('name')}}" class="form-control @error ('name') is-invalid @enderror">
+                            <label for="packagename">Nome do Pacote</label>
+                            <input type="text" name="packagename" id="packagename" value="{{old('packagename')}}" class="form-control @error ('packagename') is-invalid @enderror">
                         </div>
                     </div>
                 </div>

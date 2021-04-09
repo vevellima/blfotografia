@@ -31,7 +31,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="name">Produto</label>
-                            <input type="text" name="name" id="name" value="{{$product->name}}" class="form-control @error ('name') is-invalid @enderror">
+                            <input type="text" name="name" id="name" value="{{$product->product}}" class="form-control @error ('name') is-invalid @enderror">
                         </div>
                     </div>
                 </div>

@@ -32,4 +32,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function servuser()
+    {
+        return $this->hasMany(Service::class);
+    }
 }

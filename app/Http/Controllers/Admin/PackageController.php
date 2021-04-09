@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Package;
 use App\Models\PackageName;
+use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
-class PackageNameController extends Controller
+class PackageController extends Controller
 {
     public function __construct()
     {
@@ -23,10 +25,10 @@ class PackageNameController extends Controller
      */
     public function index()
     {
-        $packagenames = PackageName::paginate(5);
+        $packages = Package::paginate(5);
 
-        return view('admin.packagenames.index', [
-            'packagenames' => $packagenames,
+        return view('admin.packages.index', [
+            'packages' => $packages
         ]);
     }
 
@@ -37,7 +39,13 @@ class PackageNameController extends Controller
      */
     public function create()
     {
-        return view('admin.packagenames.create');
+        $packagenames = PackageName::all();
+        $products = Product::all();
+
+        return view('admin.packages.create', [
+            'packagenames' => $packagenames,
+            'products' => $products
+        ]);
     }
 
     /**
@@ -49,28 +57,31 @@ class PackageNameController extends Controller
     public function store(Request $request)
     {
         $data = $request->only([
-            'name',
-            'description'
+            'packagename_id',
+            'product_id',
+            'price'
         ]);
 
         $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:255']
+            'packagename_id' => ['required', 'string', 'min:1'],
+            'product_id' => ['required', 'string', 'min:1'],
+            'price' => ['required', 'string', 'min:1']
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('packagenames.create')
+            return redirect()->route('packages.create')
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        $packagename = new PackageName();
-        $packagename->name = $data['name'];
-        $packagename->description = $data['description'];
-        $packagename->created_at = date('Y-m-d', strtotime(date(now())));
-        $packagename->save();
+        $package = new Package();
+        $package->packagename_id = $data['packagename_id'];
+        $package->product_id = $data['product_id'];
+        $package->price = $data['price'];
+        $package->created_at = date('Y-m-d', strtotime(date(now())));
+        $package->save();
 
-        return redirect()->route('packagenames.index');
+        return redirect()->route('packages.index');
     }
 
     /**
@@ -92,15 +103,15 @@ class PackageNameController extends Controller
      */
     public function edit($id)
     {
-        $packagename = PackageName::find($id);
+        $package = Package::find($id);
 
-        if ($packagename) {
-            return view('admin.packagenames.edit', [
-                'packagename' => $packagename
+        if ($package) {
+            return view('admin.packages.edit', [
+                'package' => $package
             ]);
         }
 
-        return redirect()->route('packagenames.index');
+        return redirect()->route('packages.index');
     }
 
     /**
@@ -112,35 +123,19 @@ class PackageNameController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $packagename = PackageName::find($id);
+        $package = Package::find($id);
 
-        if ($packagename) {
+        if ($package) {
             $data = $request->only([
-                'name',
-                'description'
+                'price'
             ]);
 
-            $validator = Validator::make([
-                'name' => $data['name'],
-                'description' => $data['description'],
-            ], [
-                'name' => ['required', 'string', 'max:255'],
-                'description' => ['required', 'string', 'max:255']
-            ]);
+            $package->price = $data['price'];
 
-            if (count($validator->errors()) > 0) {
-                return redirect()->route('packagenames.edit', [
-                    'packagename' => $id
-                ])->withErrors($validator);
-            }
-
-            $packagename->name = $data['name'];
-            $packagename->description = $data['description'];
-
-            $packagename->save();
+            $package->save();
         }
 
-        return redirect()->route('packagenames.index');
+        return redirect()->route('packages.index');
     }
 
     /**
@@ -151,9 +146,9 @@ class PackageNameController extends Controller
      */
     public function destroy($id)
     {
-        $packagename = PackageName::find($id);
-        $packagename->delete();
+        $package = Package::find($id);
+        $package->delete();
 
-        return redirect()->route('packagenames.index');
+        return redirect()->route('packages.index');
     }
 }

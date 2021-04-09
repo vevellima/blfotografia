@@ -26,7 +26,7 @@
                     @foreach ($products as $product)
                         <tr>
                             <td>{{$product->id}}</td>
-                            <td>{{$product->name}}</td>
+                            <td>{{$product->product}}</td>
                             <td>{{date('d/m/Y', strtotime(date($product->created_at)))}}</td>
                             <td>
                                 <a href="{{route('products.edit', ['product' => $product->id])}}" class="btn btn-sm btn-info">Editar</a>
