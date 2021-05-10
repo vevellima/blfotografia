@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class PaymentControl extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    protected $table = 'paymentcontrols';
 
-    public function pkproduct()
-    {
-        return $this->hasMany(Package::class);
-    }
+    public $timestamps = false;
 }

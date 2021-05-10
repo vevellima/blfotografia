@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:user-admin');
     }
     /**
      * Display a listing of the resource.
@@ -23,7 +25,7 @@ class ProductController extends Controller
         $products = Product::paginate(5);
 
         return view('admin.products.index', [
-            'products' => $products
+            'products' => $products,
         ]);
     }
 
@@ -55,13 +57,13 @@ class ProductController extends Controller
 
         if ($validator->fails()) {
             return redirect()->route('products.create')
-            ->withErrors($validator)
+                ->withErrors($validator)
                 ->withInput();
         }
 
-        $product = new Product;
+        $product = new Product();
         $product->name = $data['name'];
-        $product->created_at = date('Y-m-d H:i:s', strtotime(now()));
+        $product->created_at = date('Y-m-d', strtotime(date(now())));
         $product->save();
 
         return redirect()->route('products.index');
@@ -70,10 +72,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
         //
     }
@@ -81,11 +83,13 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
+        $product = Product::find($id);
+
         if ($product) {
             return view('admin.products.edit', [
                 'product' => $product
@@ -99,14 +103,16 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
+        $product = Product::find($id);
+
         if ($product) {
             $data = $request->only([
-                'name',
+                'name'
             ]);
 
             $validator = Validator::make([
@@ -115,15 +121,13 @@ class ProductController extends Controller
                 'name' => ['required', 'string', 'max:255'],
             ]);
 
-            if ($product->name != $data['name']) {
-                $product->name = $data['name'];
-            }
-
             if (count($validator->errors()) > 0) {
                 return redirect()->route('products.edit', [
-                    'product' => $product
+                    'product' => $id
                 ])->withErrors($validator);
             }
+
+            $product->name = $data['name'];
 
             $product->save();
         }
@@ -134,11 +138,12 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
+        $product = Product::find($id);
         $product->delete();
 
         return redirect()->route('products.index');

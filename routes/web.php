@@ -1,20 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', App\Http\Controllers\HomeController::class)->name('index');
+Route::get('/', [App\Http\Controllers\Site\HomeController::class, 'index']);
 
 Route::prefix('painel')->group(function () {
     Route::get('/', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin');
@@ -27,7 +17,8 @@ Route::prefix('painel')->group(function () {
     Route::post('register', [App\Http\Controllers\Admin\Auth\RegisterController::class, 'register']);
 
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
-    Route::resource('packagenames', App\Http\Controllers\Admin\PackagenameController::class);
     Route::resource('products', App\Http\Controllers\Admin\ProductController::class);
+    Route::resource('packagenames', App\Http\Controllers\Admin\PackageNameController::class);
     Route::resource('packages', App\Http\Controllers\Admin\PackageController::class);
+    Route::resource('services', App\Http\Controllers\Admin\ServiceController::class);
 });

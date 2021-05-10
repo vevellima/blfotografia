@@ -8,15 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Package extends Model
 {
     use HasFactory;
+
     public $timestamps = false;
 
     public function product()
     {
-        return $this->belongsTo('App\Models\Product');
+        return $this->belongsTo(Product::class);
     }
 
     public function packagename()
     {
-        return $this->belongsTo('App\Models\Packagename');
+        return $this->belongsTo(PackageName::class);
     }
+
+    public function servpackage()
+    {
+        return $this->hasMany(Service::class);
+    }
+
 }

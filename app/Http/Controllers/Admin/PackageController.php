@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Package;
-use App\Models\Packagename;
+use App\Models\PackageName;
 use App\Models\Product;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:user-admin');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,13 +26,9 @@ class PackageController extends Controller
     public function index()
     {
         $packages = Package::paginate(5);
-        $packagenames = Packagename::all();
-        $products = Product::all();
 
         return view('admin.packages.index', [
-            'packages' => $packages,
-            'packagenames' => $packagenames,
-            'products' => $products
+            'packages' => $packages
         ]);
     }
 
@@ -40,12 +39,12 @@ class PackageController extends Controller
      */
     public function create()
     {
-        $packagenames = Packagename::all();
+        $packagenames = PackageName::all();
         $products = Product::all();
 
         return view('admin.packages.create', [
             'packagenames' => $packagenames,
-            'products' => $products,
+            'products' => $products
         ]);
     }
 
@@ -58,26 +57,28 @@ class PackageController extends Controller
     public function store(Request $request)
     {
         $data = $request->only([
-            'price',
             'packagename_id',
-            'product_id'
+            'product_id',
+            'price'
         ]);
 
         $validator = Validator::make($data, [
-            'price' => ['required', 'string'],
+            'packagename_id' => ['required', 'string', 'min:1'],
+            'product_id' => ['required', 'string', 'min:1'],
+            'price' => ['required', 'string', 'min:1']
         ]);
 
         if ($validator->fails()) {
             return redirect()->route('packages.create')
-            ->withErrors($validator)
+                ->withErrors($validator)
                 ->withInput();
         }
 
-        $package = new Package;
-        $package->price = intval($data['price']);
+        $package = new Package();
         $package->packagename_id = $data['packagename_id'];
         $package->product_id = $data['product_id'];
-        $package->created_at = date('Y-m-d H:i:s', strtotime(now()));
+        $package->price = $data['price'];
+        $package->created_at = date('Y-m-d', strtotime(date(now())));
         $package->save();
 
         return redirect()->route('packages.index');
@@ -86,10 +87,10 @@ class PackageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Package  $package
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Package $package)
+    public function show($id)
     {
         //
     }
@@ -97,34 +98,57 @@ class PackageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Package  $package
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Package $package)
+    public function edit($id)
     {
-        //
+        $package = Package::find($id);
+
+        if ($package) {
+            return view('admin.packages.edit', [
+                'package' => $package
+            ]);
+        }
+
+        return redirect()->route('packages.index');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Package  $package
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Package $package)
+    public function update(Request $request, $id)
     {
-        //
+        $package = Package::find($id);
+
+        if ($package) {
+            $data = $request->only([
+                'price'
+            ]);
+
+            $package->price = $data['price'];
+
+            $package->save();
+        }
+
+        return redirect()->route('packages.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Package  $package
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Package $package)
+    public function destroy($id)
     {
-        //
+        $package = Package::find($id);
+        $package->delete();
+
+        return redirect()->route('packages.index');
     }
 }

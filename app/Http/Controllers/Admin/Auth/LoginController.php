@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -42,14 +43,14 @@ class LoginController extends Controller
 
     public function index()
     {
-        return view('admin.auth.login');
+        return view('admin.login');
     }
 
     public function authenticate(Request $request)
     {
         $data = $request->only([
             'email',
-            'password'
+            'password',
         ]);
 
         $validator = $this->validator($data);
@@ -58,31 +59,28 @@ class LoginController extends Controller
 
         if ($validator->fails()) {
             return redirect()->route('login')
-                ->withErrors($validator)
+            ->withErrors($validator)
                 ->withInput();
         }
 
         if (Auth::attempt($data, $remember)) {
             return redirect()->route('admin');
         } else {
-            $validator->errors()->add('password', 'E-mail e/ou senha errados!');
-            return redirect()->route('login')
-                ->withErrors($validator)
-                ->withInput();
+            return redirect()->route('login');
         }
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('admin');
+        return redirect()->route('login');
     }
 
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:4']
+            'password' => ['required', 'string', 'min:4'],
         ]);
     }
 }

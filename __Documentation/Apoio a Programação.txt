@@ -1,0 +1,64 @@
+$array = ['error' => ''];
+
+return $array;
+
+--- Font Awesome ---
+<script src="https://kit.fontawesome.com/d5a1e54610.js" crossorigin="anonymous"></script>
+
+--- TABLES ---
+- users
+- photos	
+- services
+- paymentcontrols
+- packages
+- products
+- packagenames
+
+--- MODELS ---
+User
+Photo
+Service
+Paymentcontrol
+Package
+Product
+Packagename
+
+--- CONTROLLERS ---
+User
+Photo
+Service
+PaymentControl
+Package
+Product
+PackageName
+
+--- ANDPOINTS ---
+
+
+--- TOKEN ---
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6NTUwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYxNzMyNzU0NywibmJmIjoxNjE3MzI3NTQ3LCJqdGkiOiJ0dE1LREZCQk94SzFjZlJaIiwic3ViIjoxLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.yEUJi4JUGzS0LWiku-DzuLFykg2kW5LexV8Ht76hxXs
+
+--- CAMPOS TABLES - USERS ---
+$name = $request->input('name');
+$email = $request->input('email');
+$password = $request->input('password');
+$access_level = '';
+$cpf = '';
+$cnpj = '';
+$rg = '';
+$birthdate = '';
+$phone = '';
+$address = '';
+$neighborhood = '';
+$city = '';
+$state = '';
+$zip_code = '';
+$website = '';*/
+
+
+private function _packageListToObject($packageList, $idPackage)
+    {
+        foreach ($variable as $key => $value) {
+            # code...
+        }
+    }

@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:user-admin');
     }
 
     /**
@@ -24,7 +25,6 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(5);
-
         $loggedId = intval(Auth::id());
 
         return view('admin.users.index', [
@@ -52,17 +52,29 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $data = $request->only([
-            'name', 'cpf',
-            'rg', 'cnpj', 'birthdate', 'phone',
-            'address', 'neighborhood', 'city',
-            'state', 'zip_code', 'email', 'website',
-            'password', 'password_confirmation'
+            'name',
+            'access_level',
+            'cpf',
+            'cnpj',
+            'rg',
+            'birthdate',
+            'phone',
+            'address',
+            'neighborhood',
+            'city',
+            'state',
+            'zip_code',
+            'email',
+            'website',
+            'password',
+            'password_confirmation'
         ]);
 
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:4', 'confirmed'],
+            'access_level' => ['required', 'string', 'max:1'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:4', 'confirmed']
         ]);
 
         if ($validator->fails()) {
@@ -73,9 +85,10 @@ class UserController extends Controller
 
         $user = new User;
         $user->name = $data['name'];
+        $user->access_level = $data['access_level'];
         $user->cpf = $data['cpf'];
-        $user->rg = $data['rg'];
         $user->cnpj = $data['cnpj'];
+        $user->rg = $data['rg'];
         $user->birthdate = $data['birthdate'];
         $user->phone = $data['phone'];
         $user->address = $data['address'];
@@ -134,22 +147,36 @@ class UserController extends Controller
 
         if ($user) {
             $data = $request->only([
-                'name', 'cpf', 'access_level',
-                'rg', 'cnpj', 'birthdate', 'phone',
-                'address', 'neighborhood', 'city',
-                'state', 'zip_code', 'email', 'website',
-                'password', 'password_confirmation'
+                'name',
+                'access_level',
+                'cpf',
+                'cnpj',
+                'rg',
+                'birthdate',
+                'phone',
+                'address',
+                'neighborhood',
+                'city',
+                'state',
+                'zip_code',
+                'email',
+                'website',
+                'password',
+                'password_confirmation'
             ]);
 
             $validator = Validator::make([
                 'name' => $data['name'],
+                'access_level' => $data['access_level'],
                 'email' => $data['email'],
             ], [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255']
+                'access_level' => ['required', 'string', 'max:1'],
+                'email' => ['required', 'string', 'email', 'max:255'],
             ]);
 
             $user->name = $data['name'];
+            $user->access_level = $data['access_level'];
 
             if ($user->email != $data['email']) {
                 $hasEmail = User::where('email', $data['email'])->get();
@@ -157,7 +184,7 @@ class UserController extends Controller
                     $user->email = $data['email'];
                 } else {
                     $validator->errors()->add('email', __('validation.unique', [
-                        'attribute' => 'email'
+                        'attribute' => 'email',
                     ]));
                 }
             }
@@ -177,53 +204,6 @@ class UserController extends Controller
                         'min' => 4
                     ]));
                 }
-            }
-
-            if ($user->access_level != $data['access_level']) {
-                $user->access_level = $data['access_level'];
-            }
-
-            if ($user->cpf != $data['cpf']) {
-                $user->cpf = $data['cpf'];
-            }
-
-            if ($user->rg != $data['rg']) {
-                $user->rg = $data['rg'];
-            }
-
-            if ($user->cnpj != $data['cnpj']) {
-                $user->cnpj = $data['cnpj'];
-            }
-
-            if ($user->birthdate != date('Y-m-d', strtotime($data['birthdate']))) {
-                $user->birthdate = date('Y-m-d', strtotime($data['birthdate']));
-            }
-
-            if ($user->phone != $data['phone']) {
-                $user->phone = $data['phone'];
-            }
-
-            if ($user->address != $data['address']) {
-                $user->address = $data['address'];
-            }
-
-            if ($user->neighborhood != $data['neighborhood']) {
-                $user->neighborhood = $data['neighborhood'];
-            }
-
-            if ($user->city != $data['city']) {
-                $user->city = $data['city'];
-            }
-            if ($user->state != $data['state']) {
-                $user->state = $data['state'];
-            }
-
-            if ($user->zip_code != $data['zip_code']) {
-                $user->zip_code = $data['zip_code'];
-            }
-
-            if ($user->website != $data['website']) {
-                $user->website = $data['website'];
             }
 
             if (count($validator->errors()) > 0) {

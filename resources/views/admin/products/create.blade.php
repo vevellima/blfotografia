@@ -1,22 +1,20 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastrar - Produto')
+@section('title', 'Novo Produto')
 
 @section('content_header')
-    <h1>
-        Cadastrar Produto
-    </h1>
-
+    <h1>Novo Produto</h1>
 @endsection
 
 @section('content')
 
-    @if ($errors->any())
+    @if($errors->any())
         <div class="alert alert-danger">
-            <h5><i class="icon fas fa-ban"></i>
-                Ocorreu um erro:
-            </h5>
             <ul>
+                <h5>
+                    <i class="icon fas fa-ban"></i>
+                    Listagem de Erro(s):
+                </h5>
                 @foreach ($errors->all() as $error)
                     <li>{{$error}}</li>
                 @endforeach
@@ -24,23 +22,28 @@
         </div>
     @endif
 
-    <form action="{{route('products.store')}}" method="POST" class="form-horizontal">
-        @csrf
-        <div class="card">
-            <div class="card-body">
+    <div class="card">
+        <div class="card-body">
+            <form action="{{route('products.store')}}" method="POST">
+                @csrf
                 <div class="row">
-                    <div class="form-group col-12">
-                        <label class="col-sm col-form-label">Name</label>
-                        <input type="text" name="name" value="{{old('name')}}" class="form-control @error('name') is-invalid @enderror">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="product">Produto</label>
+                            <input type="text" name="product" id="product" value="{{old('product')}}" class="form-control @error ('name') is-invalid @enderror">
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <label></label>
+                            <input type="submit" value="Cadastrar" class="btn btn-success"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="row">
-            <div class="form-group col-6">
-                <input type="submit" value="Cadastrar" class="btn btn-success">
-            </div>
-        </div>
-    </form>
-</div>
+    </div>
+
 @endsection
